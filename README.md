@@ -23,7 +23,7 @@ Can be changed in the .env file
 * Run ```docker exec -it bitcamp_drupal_php bash``` to access bash shell in the container.
 * Run ```drush entity:delete shortcut_set``` to delete entities of type shortcut, as these entities need to be deleted before importing configuration.
 * Run ```drush cset system.site uuid ecc95dd7-80fa-4f20-a42e-9ac0958d0b51 -y``` To change current site's UUID to the exported site's configuration UUID.
-* Run ```drush cim -y or drush config-import -y```.
+* Run ```drush cim -y``` or ```drush config-import -y```.
 
 
 * Create content of type "Article" and follow instructions below:
