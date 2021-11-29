@@ -1,27 +1,23 @@
-uuid: 47114716-b379-4972-8ed3-e06a1b78c8a9
+uuid: 6770db61-6fa4-49e1-9b03-ab18b93736e8
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.body
-    - field.storage.node.field_image
-    - field.storage.node.field_tags
-    - node.type.article
+    - field.storage.comment.comment_body
   module:
-    - image
+    - comment
     - node
     - rest
-    - rest_views
     - serialization
     - text
     - user
-id: articles
-label: Articles
+id: comments
+label: Comments
 module: views
 description: ''
 tag: ''
-base_table: node_field_data
-base_field: nid
+base_table: comment_field_data
+base_field: cid
 display:
   default:
     display_plugin: default
@@ -32,7 +28,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access content'
+          perm: 'access comments'
       cache:
         type: tag
         options: {  }
@@ -73,12 +69,7 @@ display:
             previous: ‹‹
             next: ››
       style:
-        type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          uses_fields: false
+        type: serializer
       row:
         type: fields
         options:
@@ -86,12 +77,23 @@ display:
           separator: ''
           hide_empty: false
           default_field_elements: true
+      relationships:
+        node:
+          id: node
+          table: comment_field_data
+          field: node
+          entity_type: comment_field_data
+          required: true
+          plugin_id: standard
+          relationship: none
+          group_type: group
+          admin_label: Content
       fields:
         uuid:
           id: uuid
           table: node
           field: uuid
-          relationship: none
+          relationship: node
           group_type: group
           admin_label: ''
           label: ''
@@ -152,10 +154,75 @@ display:
           entity_type: node
           entity_field: uuid
           plugin_id: field
-        title:
-          id: title
+        uid:
+          id: uid
           table: node_field_data
-          field: title
+          field: uid
+          relationship: node
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: node
+          entity_field: uid
+          plugin_id: field
+        subject:
+          id: subject
+          table: comment_field_data
+          field: subject
           relationship: none
           group_type: group
           admin_label: ''
@@ -195,7 +262,7 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -214,13 +281,13 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: node
-          entity_field: title
+          entity_type: comment
+          entity_field: subject
           plugin_id: field
-        body:
-          id: body
-          table: node__body
-          field: body
+        comment_body:
+          id: comment_body
+          table: comment__comment_body
+          field: comment_body
           relationship: none
           group_type: group
           admin_label: ''
@@ -279,137 +346,9 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_image:
-          id: field_image
-          table: node__field_image
-          field: field_image
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: image_url
-          settings:
-            image_style: ''
-          group_column: ''
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
-        uid:
-          id: uid
-          table: node_field_data
-          field: uid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: node
-          entity_field: uid
-          plugin_id: field
         created:
           id: created
-          table: node_field_data
+          table: comment_field_data
           field: created
           relationship: none
           group_type: group
@@ -458,7 +397,7 @@ display:
           click_sort_column: value
           type: timestamp
           settings:
-            date_format: html_date
+            date_format: medium
             custom_date_format: ''
             timezone: ''
           group_column: value
@@ -471,74 +410,13 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: node
+          entity_type: comment
           entity_field: created
           plugin_id: field
-        field_tags_export:
-          id: field_tags_export
-          table: node__field_tags
-          field: field_tags_export
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: 0
-          group_column: target_id
-          group_columns: {  }
-          group_rows: 1
-          delta_limit: '0'
-          delta_offset: '0'
-          delta_reversed: 0
-          delta_first_last: 0
-          field_api_classes: 0
-          plugin_id: field_export
-        comment_count:
-          id: comment_count
-          table: comment_entity_statistics
-          field: comment_count
+        changed:
+          id: changed
+          table: comment_field_data
+          field: changed
           relationship: none
           group_type: group
           admin_label: ''
@@ -583,22 +461,32 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          set_precision: false
-          precision: 0
-          decimal: .
-          separator: ','
-          format_plural: false
-          format_plural_string: !!binary MQNAY291bnQ=
-          prefix: ''
-          suffix: ''
-          plugin_id: numeric
+          click_sort_column: value
+          type: timestamp
+          settings:
+            date_format: medium
+            custom_date_format: ''
+            timezone: ''
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: comment
+          entity_field: changed
+          plugin_id: field
       filters:
         status:
           value: '1'
-          table: node_field_data
+          table: comment_field_data
           field: status
           plugin_id: boolean
-          entity_type: node
+          entity_type: comment
           entity_field: status
           id: status
           expose:
@@ -606,47 +494,33 @@ display:
             operator_limit_selection: false
             operator_list: {  }
           group: 1
-        type:
-          id: type
+        status_node:
+          value: '1'
           table: node_field_data
-          field: type
-          value:
-            article: article
+          field: status
+          plugin_id: boolean
+          relationship: node
           entity_type: node
-          entity_field: type
-          plugin_id: bundle
+          entity_field: status
+          id: status_node
           expose:
+            operator: ''
             operator_limit_selection: false
             operator_list: {  }
-      sorts:
-        created:
-          id: created
-          table: node_field_data
-          field: created
-          order: DESC
-          entity_type: node
-          entity_field: created
-          plugin_id: date
-          relationship: none
-          group_type: group
-          admin_label: ''
-          exposed: false
-          expose:
-            label: ''
-          granularity: second
+          group: 1
+      sorts: {  }
       header: {  }
       footer: {  }
       empty: {  }
-      relationships: {  }
       arguments:
         uuid:
           id: uuid
           table: node
           field: uuid
-          relationship: none
+          relationship: node
           group_type: group
           admin_label: ''
-          default_action: ignore
+          default_action: empty
           exception:
             value: all
             title_enable: false
@@ -686,14 +560,12 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - request_format
         - url
         - url.query_args
-        - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_image'
-        - 'config:field.storage.node.field_tags'
+        - 'config:field.storage.comment.comment_body'
   rest_export_1:
     display_plugin: rest_export
     id: rest_export_1
@@ -701,7 +573,12 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: api/articles
+      path: api/comments
+      pager:
+        type: some
+        options:
+          items_per_page: 10
+          offset: 0
       style:
         type: serializer
         options:
@@ -712,7 +589,7 @@ display:
         type: data_field
         options:
           field_options:
-            title:
+            subject:
               alias: ''
               raw_output: false
     cache_metadata:
@@ -722,9 +599,6 @@ display:
         - 'languages:language_interface'
         - request_format
         - url
-        - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.body'
-        - 'config:field.storage.node.field_image'
-        - 'config:field.storage.node.field_tags'
+        - 'config:field.storage.comment.comment_body'
