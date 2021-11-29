@@ -13,7 +13,7 @@ Database password - drupal
 Host (Advanced Options) - mariadb
 
 Can be changed in the .env file
-
+```
 * Configure Site as needed and finish installation.
 
 ### Configuration import
