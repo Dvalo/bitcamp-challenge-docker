@@ -1,6 +1,33 @@
-# Docker-based Drupal stack
+## Getting Started
 
-[![Build Status](https://github.com/wodby/docker4drupal/workflows/Run%20tests/badge.svg)](https://github.com/wodby/docker4drupal/actions)
+[View Challenge](https://forum.bitcamp.ge/t/bitcamp-drupal-node-react-next-js/358)
+
+* Clone the bitcamp-challenge-docker repo.
+* Run ```composer install``` to install project's dependencies.
+* Run ```docker-compose up -d``` to start containers.
+* Open [http://drupal.localhost:8000](http://drupal.localhost:8000) to setup Drupal.
+```
+Database Name - drupal
+Database username - drupal
+Database password - drupal
+Host (Advanced Options) mariadb.
+
+Can be changed in the ```.env``` file
+
+* Configure Site as needed and finish installation.
+
+### Configuration import
+
+* Run ```docker exec -it bitcamp_drupal_php bash``` to access bash shell in the container.
+* Run ```drush entity:delete shortcut_set``` to delete entities of type shortcut, as these entities need to be deleted before importing configuration.
+* Run ```drush cset system.site uuid ecc95dd7-80fa-4f20-a42e-9ac0958d0b51 -y``` To change current site's UUID to the exported site's configuration UUID.
+* Run ```drush cim or drush config-import```
+* Create content of type "Article" and follow instructions below:
+
+After following these setup steps, proceed to setup the following: [bitcamp-challenge-next](https://github.com/Dvalo/bitcamp-challenge-next).
+
+
+# docker4drupal readme
 
 ## Introduction
 
